@@ -1,6 +1,6 @@
 [project]
 name = "mapilli"
-version = "0.1.0"
+version = "0.1.1"
 description = "Modern Python asyncio Finger protocol (RFC 1288) client library"
 readme = "README.md"
 authors = [{ name = "Alan Velasco", email = "alanvelasco.a@gmail.com" }]
