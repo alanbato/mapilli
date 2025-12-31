@@ -209,9 +209,7 @@ class TestCLIPortOption:
             return_value=mock_client,
         )
 
-        result = runner.invoke(
-            app, ["--host", "example.com", "-p", "8079", "alice"]
-        )
+        result = runner.invoke(app, ["--host", "example.com", "-p", "8079", "alice"])
 
         assert result.exit_code == 0
         mock_client.query.assert_called_once_with(
@@ -267,9 +265,7 @@ class TestCLITimeoutOption:
             return_value=mock_client,
         )
 
-        result = runner.invoke(
-            app, ["--host", "example.com", "-t", "10.0", "alice"]
-        )
+        result = runner.invoke(app, ["--host", "example.com", "-t", "10.0", "alice"])
 
         assert result.exit_code == 0
         mock_finger_client.assert_called_once_with(timeout=10.0)
@@ -316,9 +312,7 @@ class TestCLIErrorHandling:
     def test_connection_error_exits_1(self, mocker: MockerFixture) -> None:
         """ConnectionError should show error and exit 1."""
         mock_client = AsyncMock()
-        mock_client.query = AsyncMock(
-            side_effect=ConnectionError("Connection refused")
-        )
+        mock_client.query = AsyncMock(side_effect=ConnectionError("Connection refused"))
         mock_client.__aenter__ = AsyncMock(return_value=mock_client)
         mock_client.__aexit__ = AsyncMock(return_value=None)
 
@@ -335,9 +329,7 @@ class TestCLIErrorHandling:
     def test_unexpected_error_exits_1(self, mocker: MockerFixture) -> None:
         """Unexpected errors should show error and exit 1."""
         mock_client = AsyncMock()
-        mock_client.query = AsyncMock(
-            side_effect=RuntimeError("Something went wrong")
-        )
+        mock_client.query = AsyncMock(side_effect=RuntimeError("Something went wrong"))
         mock_client.__aenter__ = AsyncMock(return_value=mock_client)
         mock_client.__aexit__ = AsyncMock(return_value=None)
 

@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import asyncio
 import socket
-from typing import TYPE_CHECKING, Callable
+from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 import pytest
 
@@ -113,7 +114,7 @@ async def slow_finger_server(unused_tcp_port: int):
     ) -> None:
         """Handle a single Finger client connection with delay."""
         try:
-            data = await asyncio.wait_for(reader.readline(), timeout=5.0)
+            _data = await asyncio.wait_for(reader.readline(), timeout=5.0)
             await asyncio.sleep(delay)
             writer.write(b"Delayed response\r\n")
             await writer.drain()

@@ -69,37 +69,27 @@ class TestFingerClientContextManager:
 class TestFingerClientQuery:
     """Test FingerClient.query() method with mocked finger()."""
 
-    async def test_query_parses_and_calls_finger(
-        self, mocker: MockerFixture
-    ) -> None:
+    async def test_query_parses_and_calls_finger(self, mocker: MockerFixture) -> None:
         """query() should parse query string and call finger()."""
         client = FingerClient()
 
         mock_response = FingerResponse(
             body="test", host="example.com", port=79, query="alice"
         )
-        mock_finger = mocker.patch.object(
-            client, "finger", return_value=mock_response
-        )
+        mock_finger = mocker.patch.object(client, "finger", return_value=mock_response)
 
         await client.query("alice", host="example.com")
 
-        mock_finger.assert_called_once_with(
-            host="example.com", port=79, query="alice"
-        )
+        mock_finger.assert_called_once_with(host="example.com", port=79, query="alice")
 
-    async def test_query_extracts_host_from_query(
-        self, mocker: MockerFixture
-    ) -> None:
+    async def test_query_extracts_host_from_query(self, mocker: MockerFixture) -> None:
         """query() should extract host from user@host format."""
         client = FingerClient()
 
         mock_response = FingerResponse(
             body="test", host="remotehost.com", port=79, query="alice"
         )
-        mock_finger = mocker.patch.object(
-            client, "finger", return_value=mock_response
-        )
+        mock_finger = mocker.patch.object(client, "finger", return_value=mock_response)
 
         await client.query("alice@remotehost.com")
 
@@ -115,15 +105,11 @@ class TestFingerClientQuery:
         mock_response = FingerResponse(
             body="test", host="example.com", port=79, query="alice"
         )
-        mock_finger = mocker.patch.object(
-            client, "finger", return_value=mock_response
-        )
+        mock_finger = mocker.patch.object(client, "finger", return_value=mock_response)
 
         await client.query("alice", host="example.com")
 
-        mock_finger.assert_called_once_with(
-            host="example.com", port=79, query="alice"
-        )
+        mock_finger.assert_called_once_with(host="example.com", port=79, query="alice")
 
     async def test_query_no_host_raises_valueerror(self) -> None:
         """query() should raise ValueError if no host available."""
@@ -139,9 +125,7 @@ class TestFingerClientQuery:
         mock_response = FingerResponse(
             body="test", host="example.com", port=79, query="/W alice"
         )
-        mock_finger = mocker.patch.object(
-            client, "finger", return_value=mock_response
-        )
+        mock_finger = mocker.patch.object(client, "finger", return_value=mock_response)
 
         await client.query("/W alice", host="example.com")
 
@@ -156,9 +140,7 @@ class TestFingerClientQuery:
         mock_response = FingerResponse(
             body="test", host="example.com", port=8079, query="alice"
         )
-        mock_finger = mocker.patch.object(
-            client, "finger", return_value=mock_response
-        )
+        mock_finger = mocker.patch.object(client, "finger", return_value=mock_response)
 
         await client.query("alice", host="example.com", port=8079)
 
@@ -173,9 +155,7 @@ class TestFingerClientQuery:
         mock_response = FingerResponse(
             body="user1\nuser2\n", host="example.com", port=79, query=""
         )
-        mock_finger = mocker.patch.object(
-            client, "finger", return_value=mock_response
-        )
+        mock_finger = mocker.patch.object(client, "finger", return_value=mock_response)
 
         await client.query("", host="example.com")
 
@@ -188,9 +168,7 @@ class TestFingerClientQuery:
         mock_response = FingerResponse(
             body="test", host="host1", port=79, query="alice@host1@host2"
         )
-        mock_finger = mocker.patch.object(
-            client, "finger", return_value=mock_response
-        )
+        mock_finger = mocker.patch.object(client, "finger", return_value=mock_response)
 
         await client.query("alice@host1@host2")
 
@@ -253,9 +231,7 @@ class TestFingerClientFinger:
                 await client.finger("127.0.0.1", "alice", unused_tcp_port)
 
     @pytest.mark.slow
-    async def test_finger_timeout_response(
-        self, slow_finger_server: tuple
-    ) -> None:
+    async def test_finger_timeout_response(self, slow_finger_server: tuple) -> None:
         """Test timeout during response raises TimeoutError."""
         port, set_delay = slow_finger_server
         set_delay(10.0)  # 10 second delay
@@ -285,9 +261,7 @@ class TestFingerClientFinger:
 class TestFingerClientQueryIntegration:
     """Integration tests for FingerClient.query() with mock server."""
 
-    async def test_query_with_embedded_host(
-        self, mock_finger_server: tuple
-    ) -> None:
+    async def test_query_with_embedded_host(self, mock_finger_server: tuple) -> None:
         """Test query("alice@host") extracts host correctly."""
         port, set_response, _ = mock_finger_server
         set_response("alice", "User found\r\n")

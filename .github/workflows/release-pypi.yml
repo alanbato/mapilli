@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: testpypi
-      url: https://test.pypi.org/p/astronomo
+      url: https://test.pypi.org/p/mapilli
     permissions:
       id-token: write
 
@@ -64,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/astronomo
+      url: https://pypi.org/p/mapilli
     permissions:
       id-token: write
 

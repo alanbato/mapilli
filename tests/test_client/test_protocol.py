@@ -102,9 +102,7 @@ class TestFingerClientProtocolDataReceived:
 
         assert protocol.buffer == b"Line 1\r\nLine 2\r\nLine 3\r\n"
 
-    async def test_data_received_max_size_exceeded(
-        self, mocker: MockerFixture
-    ) -> None:
+    async def test_data_received_max_size_exceeded(self, mocker: MockerFixture) -> None:
         """data_received() should close connection if MAX_RESPONSE_SIZE exceeded."""
         loop = asyncio.get_running_loop()
         future: asyncio.Future[FingerResponse] = loop.create_future()
@@ -188,9 +186,7 @@ class TestFingerClientProtocolConnectionLost:
         assert response.port == 79
         assert response.query == "alice"
 
-    async def test_connection_lost_with_exception(
-        self, mocker: MockerFixture
-    ) -> None:
+    async def test_connection_lost_with_exception(self, mocker: MockerFixture) -> None:
         """connection_lost() with error should set exception in future."""
         loop = asyncio.get_running_loop()
         future: asyncio.Future[FingerResponse] = loop.create_future()
