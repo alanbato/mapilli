@@ -1,0 +1,5 @@
+# Documentation dependencies (fallback for ReadTheDocs)
+mkdocs-git-revision-date-localized-plugin>=1.5.0
+mkdocs-material>=9.7.0
+mkdocstrings[python]>=1.0.0
+pymdown-extensions>=10.17.2
